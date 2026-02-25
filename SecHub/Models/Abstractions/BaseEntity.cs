@@ -1,4 +1,4 @@
-﻿namespace SecHub.Models;
+﻿namespace SecHub.Models.Abstractions;
 
 public class BaseEntity
 {

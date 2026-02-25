@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using SecHub.Models;
+using SecHub.Models.Abstractions;
 
 namespace SecHub.EntityFramework.Abstractions;
 

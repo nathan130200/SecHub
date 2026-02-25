@@ -1,4 +1,5 @@
 ﻿using SecHub.Enums;
+using SecHub.Models.Abstractions;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SecHub.Models;

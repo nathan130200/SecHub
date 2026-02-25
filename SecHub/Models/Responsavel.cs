@@ -1,4 +1,5 @@
 ﻿using SecHub.Enums;
+using SecHub.Models.Abstractions;
 
 namespace SecHub.Models;
 
