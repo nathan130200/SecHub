@@ -5,12 +5,10 @@ using SecHub.Models;
 namespace SecHub.EntityFramework.Abstractions;
 
 public abstract class BaseEntityTypeConfiguration<TEntity> : IEntityTypeConfiguration<TEntity>
-    where TEntity : EntityBase
+    where TEntity : BaseEntity
 {
     void IEntityTypeConfiguration<TEntity>.Configure(EntityTypeBuilder<TEntity> builder)
     {
-        Configure(builder);
-
         builder.Property(x => x.Id).ValueGeneratedOnAdd();
 
         builder.Property(x => x.Ativo).HasDefaultValue(true);
@@ -18,6 +16,8 @@ public abstract class BaseEntityTypeConfiguration<TEntity> : IEntityTypeConfigur
         builder.Property(x => x.DataCriado).ValueGeneratedOnAdd();
 
         builder.Property(x => x.DataAtualizado).ValueGeneratedOnAddOrUpdate();
+
+        Configure(builder);
     }
 
     protected abstract void Configure(EntityTypeBuilder<TEntity> builder);

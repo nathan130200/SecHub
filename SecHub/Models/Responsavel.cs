@@ -2,7 +2,7 @@
 
 namespace SecHub.Models;
 
-public class Responsavel : EntityBase
+public class Responsavel : BaseEntity
 {
     public string Nome { get; set; }
 

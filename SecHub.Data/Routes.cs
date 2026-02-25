@@ -7,6 +7,7 @@ public static class Routes
     public const string BaseRouteUrl = "api/v1";
     public const string Alunos = $"{BaseRouteUrl}/aluno";
     public const string Responsaveis = $"{BaseRouteUrl}/responsavel";
+    public const string Usuarios = $"{BaseRouteUrl}/usuario";
 }
 
 public static class LinqUtilities

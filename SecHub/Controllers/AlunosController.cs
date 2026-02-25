@@ -4,9 +4,8 @@ using SecHub.Mappers;
 using SecHub.Rest.Abstractions;
 using SecHub.Rest.Alunos;
 
-namespace SecHub.Controllers.V1;
+namespace SecHub.Controllers;
 
-[ApiController]
 [Route(Routes.Alunos)]
 public class AlunosController(
     EscolaDbContext db,
@@ -25,8 +24,7 @@ public class AlunosController(
         if (pagina > totalPages)
             return TypedResults.BadRequest("Página inválida.");
 
-        var state = await query
-            //.Include(x => x.Responsaveis)
+        var queryResult = await query
             .OrderByDescending(x => x.DataCriado)
             .ApplyPagination(pagina)
             .ToListAsync();
@@ -34,8 +32,10 @@ public class AlunosController(
         var response = new PagedQuery<GetAlunoDto>
         {
             CurrentPage = pagina,
-            PageCount = totalCount / PagedQuery.PageSize,
-            Items = state.Select(AlunoMapper.ToRest),
+            MaxPages = Math.Max(1, totalCount / PagedQuery.PageSize),
+            MaxItems = totalCount,
+            CurrentItems = queryResult.Count,
+            Items = queryResult.Select(AlunoMapper.ToRest),
         };
 
         return TypedResults.Ok(response);
@@ -46,6 +46,8 @@ public class AlunosController(
     {
         var query = db.Aluno.AsQueryable();
 
+        var maxItems = await query.CountAsync();
+
         if (buscarExato)
             query = query.Where(x => x.Nome.Contains(pesquisa));
         else
@@ -53,9 +55,7 @@ public class AlunosController(
 
         var totalCount = await query.CountAsync();
 
-        var totalPages = totalCount / PagedQuery.PageSize;
-
-        var result = await query/*.Include(x => x.Responsaveis)*/
+        var queryResult = await query
             .OrderByDescending(x => x.DataCriado)
             .ApplyPagination(pagina)
             .ToListAsync();
@@ -63,15 +63,16 @@ public class AlunosController(
         return TypedResults.Ok(new PagedQuery<GetAlunoDto>
         {
             CurrentPage = pagina,
-            PageCount = totalPages,
-            Items = result.Select(AlunoMapper.ToRest),
+            MaxPages = Math.Max(1, totalCount / PagedQuery.PageSize),
+            MaxItems = maxItems,
+            CurrentItems = totalCount,
+            Items = queryResult.Select(AlunoMapper.ToRest),
         });
     }
 
     [HttpPost("cadatrar")]
     public async Task<IResult> Cadastrar([FromBody] CreateAlunoDto state)
     {
-
         try
         {
             var aluno = AlunoMapper.FromRest(state);
@@ -90,7 +91,7 @@ public class AlunosController(
         }
     }
 
-    [HttpGet("detalhes/{alunoId:int}")]
+    [HttpGet("{alunoId:int}/detalhes")]
     public async Task<IResult> Detalhes(int alunoId)
     {
         var result = await db.Aluno
@@ -103,7 +104,7 @@ public class AlunosController(
         return TypedResults.Ok(AlunoMapper.ToRest(result));
     }
 
-    [HttpPut("atualizar/{alunoId:int}")]
+    [HttpPut("{alunoId:int}/atualizar")]
     public async Task<IResult> Atualizar(int alunoId, [FromBody] UpdateAlunoDto state)
     {
         try

@@ -3,18 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SecHub.Models;
 
-public class EntityBase
-{
-    public int Id { get; set; }
-
-    public bool Ativo { get; set; }
-
-    public DateTime DataCriado { get; set; }
-
-    public DateTime DataAtualizado { get; set; }
-}
-
-public class Aluno : EntityBase
+public class Aluno : BaseEntity
 {
     public string Nome { get; set; }
 
