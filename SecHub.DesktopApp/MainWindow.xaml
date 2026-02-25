@@ -1,0 +1,57 @@
+﻿<metro:MetroWindow x:Class="SecHub.DesktopApp.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SecHub.DesktopApp"
+        xmlns:metro="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+        mc:Ignorable="d"
+        Title="Sec Hub - Sistema Gestão de Secretaria Escolar" Height="450" Width="800"
+                   WindowStartupLocation="CenterScreen" SaveWindowPosition="True">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+
+        <Frame Name="AppHost" NavigationUIVisibility="Visible" Grid.Row="1">
+            <Frame.Content>
+                <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="32">Selecione uma função para iniciar</TextBlock>
+            </Frame.Content>
+        </Frame>
+
+
+        <Expander Header="FUNÇÕES DO SISTEMA" Grid.Row="0" Background="WhiteSmoke">
+            <StackPanel HorizontalAlignment="Center">
+                <WrapPanel>
+                    <metro:Tile Title="RELATÓRIO" Background="OrangeRed" Click="BtnFunaoNaoImplementata_Click">
+                        <Image Source="/Assets/Images/graph.png" Stretch="Fill" Margin="35" />
+                    </metro:Tile>
+                    <metro:Tile Title="FUNCIONÁRIOS" Click="BtnFunaoNaoImplementata_Click">
+                        <Image Source="/Assets/Images/person.png" Stretch="Fill" Margin="35" />
+                    </metro:Tile>
+                    <metro:Tile Title="ALUNOS" Background="CornflowerBlue">
+                        <Image Source="/Assets/Images/child.png" Stretch="Fill" Margin="35" />
+                    </metro:Tile>
+                    <metro:Tile Title="TURMAS" Click="BtnFunaoNaoImplementata_Click">
+                        <Image Source="/Assets/Images/school.png" Stretch="Fill" Margin="35" />
+                    </metro:Tile>
+                </WrapPanel>
+
+                <Separator />
+
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Grid.Column="0" HorizontalAlignment="Left">Versão do Sistema: Beta</TextBlock>
+                    <TextBlock Grid.Column="1" HorizontalAlignment="Right">Status do Servidor: <Bold>Offline</Bold></TextBlock>
+                </Grid>
+
+            </StackPanel>
+        </Expander>
+    </Grid>
+</metro:MetroWindow>
