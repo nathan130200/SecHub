@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="SecHub.Data/SecHub.Data.csproj" />
+  <Project Path="SecHub/SecHub.csproj" />
+</Solution>

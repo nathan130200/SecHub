@@ -1,0 +1,24 @@
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using SecHub.Models;
+
+namespace SecHub.EntityFramework.Abstractions;
+
+public abstract class BaseEntityTypeConfiguration<TEntity> : IEntityTypeConfiguration<TEntity>
+    where TEntity : EntityBase
+{
+    void IEntityTypeConfiguration<TEntity>.Configure(EntityTypeBuilder<TEntity> builder)
+    {
+        Configure(builder);
+
+        builder.Property(x => x.Id).ValueGeneratedOnAdd();
+
+        builder.Property(x => x.Ativo).HasDefaultValue(true);
+
+        builder.Property(x => x.DataCriado).ValueGeneratedOnAdd();
+
+        builder.Property(x => x.DataAtualizado).ValueGeneratedOnAddOrUpdate();
+    }
+
+    protected abstract void Configure(EntityTypeBuilder<TEntity> builder);
+}
